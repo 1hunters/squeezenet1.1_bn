@@ -1,0 +1,64 @@
+# Experiment name
+name: squeezenet
+
+# Name of output directory. Checkpoints and logs will be saved at `pwd`/output_dir
+output_dir: out
+
+training_device: gpu
+
+# Dataset loader
+dataloader:
+  # Dataset to train/validate (choices: imagenet, cifar10)
+  dataset: imagenet
+  # Number of categories in the specified dataset (choices: 1000, 10)
+  num_classes: 1000
+  # Path to dataset directory
+  path: /gdata/ImageNet2012
+  # Size of mini-batch
+  batch_size: 512
+  # Number of data loading workers
+  workers: 16
+  # Portion of training dataset to set aside for validation (range: [0, 1))
+  val_split: 0.02
+
+resume:
+  path: 
+  lean: false
+
+log:
+  # Number of best scores to track and report
+  num_best_scores: 3
+  # Print frequency
+  print_freq: 20
+
+#============================ Model ============================================
+
+# Model architecture
+arch: squeezenet
+
+# Use pre-trained model
+pre_trained: true
+
+# Evaluate the model without training
+# If this field is true, all the bellowing options will be ignored
+eval: false
+fp_model: false
+epochs: 160
+smoothing: 0.1
+
+# Optimizer
+opt: sgd
+lr: 0.2
+momentum: 0.9
+weight_decay: 0.00004
+
+# Learning rate scheduler
+sched: cosine
+min_lr: 0.000001
+decay_rate: 0.1
+warmup_epochs: 5
+warmup_lr: 0.00001
+decay_epochs: 40
+cooldown_epochs: 0
+
+val_cycle: 1
